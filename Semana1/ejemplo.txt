@@ -1,0 +1,6 @@
+File handling is an important part of any web application.
+Python has several functions for creating, reading, updating, and deleting files.
+The key function for working with files in Python is the open() function.
+The open() function takes two parameters; filename, and mode.
+To open a file for reading it is enough to specify the name of the file
+Note: Make sure the file exists, or else you will get an error.
