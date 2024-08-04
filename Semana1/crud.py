@@ -43,7 +43,6 @@ def insertarLibro(isbn, nombre, cantidad, libros):
     global idSec
     idSec+=1
     libros.append({"id":idSec, "isbn":isbn, "nombre":nombre, "cantidad":cantidad})
-    guardarLibros(archivo, libros)
 
 
 def listarLibros(libros):
