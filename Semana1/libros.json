@@ -1,0 +1,14 @@
+[
+    {
+        "id": 2,
+        "isbn": "321",
+        "nombre": "Pedro",
+        "cantidad": 20
+    },
+    {
+        "id": 3,
+        "isbn": "123",
+        "nombre": "Pablo",
+        "cantidad": 20
+    }
+]

@@ -1,5 +1,5 @@
 import json
-import os
+from os import system
 #{"id":1, isbn":"ghjkhg23476j6", "nombre":"nombreLibro", "cantidad":4}
 libros=[]
 idSec=1
@@ -43,6 +43,9 @@ def insertarLibro(isbn, nombre, cantidad, libros):
     global idSec
     idSec+=1
     libros.append({"id":idSec, "isbn":isbn, "nombre":nombre, "cantidad":cantidad})
+    # Aregando nuevos libros al archivo json
+    with open("libros.json", "w") as archivo:
+        json.dump(libros, archivo, indent=4)
 
 
 def listarLibros(libros):
@@ -57,6 +60,7 @@ def listarLibros(libros):
     else:
         print("No hay libros para listar")
     input("Presione ENTER para continuar ")
+    system("cls")
 
 def actualizarLibro(id, isbn, nombre, cantidad):
     libro=buscarLibro(id, libros)
@@ -85,9 +89,10 @@ def eliminarLibro(id, libros):
         return 0 
 
 def guardarLibros(libros):
-    with open("libros.json", "w"):
+    with open("libros.json", "w") as archivo:
         json.dump(libros, archivo, indent=4)
 
-with open("libros.json", "r") as archivo:
-    libros=json.load(archivo)
+def abrirLibros(libros):
+    with open("libros.json", "r") as archivo:
+        libros=json.load(archivo)
 menu(libros)
