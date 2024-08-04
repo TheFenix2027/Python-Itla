@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "isbn": "852",
+        "nombre": "Punto Final",
+        "cantidad": 10
+    },
+    {
+        "id": 2,
+        "isbn": "456",
+        "nombre": "PHP",
+        "cantidad": 30
+    },
+    {
+        "id": 3,
+        "isbn": "458",
+        "nombre": "Sistemas",
+        "cantidad": 40
+    }
+]
