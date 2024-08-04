@@ -43,6 +43,7 @@ def insertarLibro(isbn, nombre, cantidad, libros):
     global idSec
     idSec+=1
     libros.append({"id":idSec, "isbn":isbn, "nombre":nombre, "cantidad":cantidad})
+    guardarLibros(archivo, libros)
 
 
 def listarLibros(libros):
@@ -56,7 +57,7 @@ def listarLibros(libros):
             print("-----------------------")
     else:
         print("No hay libros para listar")
-    input("Presione ENTER para continuar")
+    input("Presione ENTER para continuar ")
 
 def actualizarLibro(id, isbn, nombre, cantidad):
     libro=buscarLibro(id, libros)
@@ -84,7 +85,7 @@ def eliminarLibro(id, libros):
     else:
         return 0 
 
-def fuardarLibros(libros):
+def guardarLibros(libros):
     with open("libros.json", "w"):
         json.dump(libros, archivo, indent=4)
 
