@@ -1,49 +1,67 @@
+import os 
+
 menu=[{'id':1, 'nombre':'Arroz', 'precio':50},
-    {'id':2, 'nombre':'Habichuela', 'precio':80},
+    {'id':2, 'nombre':'Habichuelas', 'precio':80},
     {'id':3, 'nombre':'Aceite', 'precio':300},
     {'id':4, 'nombre':'Pollo', 'precio':85},
-    {'id':5, 'nombre':'Lechuga', 'precio':80}]
+    {'id':5, 'nombre':'Lechuga', 'precio':80},]
 
 carrito=[]
 
 def imprimir_menu(menu):
-    tam_max = 0
+    tammax=0
     for item in menu:
-        tam_actual = len(str(item['id']))+len(item['nombre'])+len(str(item['precio']))>tam_max
-        if tam_actual>tam_max:
-            tam_max=tam_actual
-    print('-'*(int(tam_max/2+2))+'Menu'+'-'*(int(tam_max/2+2)))
+        tamactual=len(str(item['id']))+len(item['nombre'])+len(str(item['precio']))
+        if  tamactual>tammax:
+            tammax=tamactual
+    print('-'*(int(tammax/2+2))+'Menú'+'-'*(int(tammax/2+2)))
     for item in menu:
         print(f"{item['id']}. {item['nombre']} -> RD${item['precio']}")
 
-def imprimir_factura(carrito):
-    tam_id=1
-    tam_nombre=1
-    tam_precio=1
-    for item in menu:
-        tam_idact=len(str(item['id']))
-        tam_nombre_act=len(item['nombre'])
-        tam_precio_act=len(str(item['precio']))
-        if tam_idact>tam_id:
-            tam_id=tam_idact
-        if tam_nombre_act>tam_nombre:
-            tam_nombre=tam_idact
-        if tam_precio_act>tam_precio:
-            tam_precio=tam_precio_act
-    if tam_id-2<0:
-        tam_id=1
-    else:
-        tam_id-=2
-    if tam_nombre-10<0:
-        tam_nombre=2
-    else:
-        tam_nombre-=6
-    if tam_precio-6<0:
-        tam_precio=1
-    else:
-        tam_precio-=6
-    print('ID'+' '*(tam_id+2)+'Nombre'+' '*(tam_nombre+1)+'Precio'+' '*tam_precio)
+def imprimirfactura(carrito):
+    tamid=1
+    tamnombre=1
+    tamprecio=1
     for item in carrito:
-        print(str(item['id'])+' '*(tam_id+4-len(str(item['id'])))+item['nombre']+' '*(tam_nombre+8-len(item['nombre']))+str(item['precio']))
+        tamidact=len(str(item['id']))
+        tamnombreact=len(item['nombre'])
+        tamprecioact=len(str(item['precio']))
+        if tamidact>tamid:
+            tamid=tamidact
+        if tamnombreact>tamnombre:
+            tamnombre=tamnombreact
+        if tamprecioact>tamprecio:
+            tamprecio=tamprecioact
+    if tamid-2<0:
+        tamid=1
+    else:
+        tamid-=2
+    if tamnombre-6<0:
+        tamnombre=1
+    else:
+        tamnombre-=6
+    if tamprecio-6<0:
+        tamprecio=1
+    else:
+        tamprecio-=6
+    print('ID'+' '*(tamid+2)+'Nombre'+' '*(tamnombre+1)+'Precio'+' '*(tamprecio))
+    for item in carrito:
+        print(str(item['id'])+' '*(tamid+4-len(str(item['id'])))+item['nombre']+' '*(tamnombre+7-len(item['nombre']))+str(item['precio']))
 
-imprimir_factura(menu)
+# LImpiar pantalla
+os.system("cls")
+imprimirfactura(menu)
+
+#trabajando con menu de opciones
+while True:
+    print(f"Opciones del Menu")
+    print(f"1- Buscar Productos")
+    print(f"0- Para Salir del Sistema")
+    vTarea = int(input("Ingresa la Opcion a Trabajar: "))
+    if vTarea == 0:
+        print("Gracias por Utilizar Nuestros Servicios")
+        break
+    elif vTarea == 1:
+        print("Vamos a buscar un producto")
+    else:    
+        print("Opcion no registrada, intente de nuevo")
