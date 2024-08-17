@@ -1,12 +1,15 @@
-import os 
+from os import system
+system("cls")
 
-menu=[{'id':1, 'nombre':'Arroz', 'precio':50},
-    {'id':2, 'nombre':'Habichuelas', 'precio':80},
-    {'id':3, 'nombre':'Aceite', 'precio':300},
-    {'id':4, 'nombre':'Pollo', 'precio':85},
-    {'id':5, 'nombre':'Lechuga', 'precio':80},]
-
-carrito=[]
+# Creando el Diccionario con los Datos
+productos = {'1': {'prod': 'Arroz', 'prec': 50},
+             '2': {'prod': 'Habichuela', 'prec': 80},
+             '3': {'prod': 'Aceite', 'prec': 300},
+             '4': {'prod': 'Pollo', 'prec': 85},
+             '5': {'prod': 'Lechuga', 'prec': 80}
+             }
+# carrito de compra
+carrito = {}
 
 def imprimir_menu(menu):
     tammax=0
@@ -48,20 +51,117 @@ def imprimirfactura(carrito):
     for item in carrito:
         print(str(item['id'])+' '*(tamid+4-len(str(item['id'])))+item['nombre']+' '*(tamnombre+7-len(item['nombre']))+str(item['precio']))
 
-# LImpiar pantalla
-os.system("cls")
-imprimirfactura(menu)
 
-#trabajando con menu de opciones
+def fImprimirLists(pprodocutos):
+    print("Productos Existentes en la Tienda")
+    print("----------------------------------")
+    for item in pprodocutos:
+        producto = pprodocutos[item] 
+        print(f"ID: {item} - Producto: {producto['prod']} - Precio: RD${producto['prec']}")
+    print("----------------------------------")
+
+def fBuscarLists(pprodocutos, id):
+    resultado = False
+    print("Productos Existentes en la Tienda")
+    print("----------------------------------")
+    for item in pprodocutos:    
+        if str(id) == item:
+            producto = pprodocutos[item] 
+            print(f"Producto con ID: {id} encontrado")    
+            print(f"Producto: {producto['prod']} - Precio: RD${producto['prec']}")   
+            resultado = True
+    print("----------------------------------")  
+    return(resultado)   
+
+def fImprimirFactura(pcarrito, pprodocutos):
+    vsubTotal = 0
+    vImpuestos = 0
+    vTotal = 0
+    vItebis = .18
+    
+    # Trabajando con el ancho de las columnas
+    anchoId = 5
+    anchoProducto = 15
+    anchoPrecioUnidad = 15
+    anchoCantidad = 10
+    anchoPrecioTotal = 15
+    anchoTotal = anchoId + anchoProducto + anchoPrecioUnidad + anchoCantidad + anchoPrecioTotal
+    #
+    
+    print("Productos Facturados en la Tienda")
+    print("-" * anchoTotal)
+    print(
+        "ID".ljust(anchoId) +
+        "Producto".ljust(anchoProducto) +
+        "Precio Unidad".ljust(anchoPrecioUnidad) +
+        "Cantidad".ljust(anchoCantidad) +
+        "Precio Total".ljust(anchoPrecioTotal)
+)
+
+    # Línea separadora
+    print("-" * anchoTotal)
+
+    for x in pcarrito:
+        for y in pprodocutos:
+            if str(x) == y:
+                cantidadCompra = pcarrito[x]        
+                producto = pprodocutos[y]
+                print(str(x).ljust(anchoId) + str(producto['prod']).ljust(anchoProducto) + ("RD$" + str(producto['prec'])).ljust(anchoPrecioUnidad) + str(cantidadCompra).ljust(anchoCantidad) + ("RD$"+str(producto['prec'] * cantidadCompra)).ljust(anchoPrecioTotal))
+                vsubTotal = vsubTotal + producto['prec'] * cantidadCompra
+    
+    if vsubTotal > 0:
+        vImpuestos = vsubTotal * vItebis
+        vTotal = vsubTotal + vImpuestos
+        print((f"SubTotal      : RD$%.2f" % vsubTotal).rjust(anchoTotal))
+        print((f"Impuestos     : RD$%.2f" % vImpuestos).rjust(anchoTotal))
+        print((f"Total a Pagar : RD$%.2f" % vTotal).rjust(anchoTotal))
+    print("-" * anchoTotal)
+
+# Creando Menu
 while True:
-    print(f"Opciones del Menu")
-    print(f"1- Buscar Productos")
-    print(f"0- Para Salir del Sistema")
-    vTarea = int(input("Ingresa la Opcion a Trabajar: "))
-    if vTarea == 0:
-        print("Gracias por Utilizar Nuestros Servicios")
+    # system("cls")
+    print("Punto de Venta DJ")
+    fImprimirLists(productos)  
+    print("0- Para Salir | 1- Buscar Productos | 2- Imprimir Factura")
+    condition = int(input("Ingresar la Opcion a Trabajar: "))  
+    if condition == 0:   
+        print("Gracias por Su Compra!!!") 
         break
-    elif vTarea == 1:
-        print("Vamos a buscar un producto")
-    else:    
-        print("Opcion no registrada, intente de nuevo")
+    elif condition == 1:
+        while True:
+            id = int(input("Ingresar el ID del Producto a Comprar: "))  
+            # Buscar Productos
+            vresultado = fBuscarLists(productos, id)
+            if vresultado == True:      
+                    cantidad = -1
+                    while cantidad < 0:
+                        cantidad = int(input("Ingresar la cantidad que desea del producto elegido (debe ser mayor que 1): "))    
+                        if cantidad > 0:
+                            if id in carrito:
+                                print(f"Articulo ya se encuentra en el carrito, se sumara la cantidad indicada")
+                                carrito[id] = carrito[id] + cantidad
+                            else:
+                                carrito[id] = cantidad  
+                    # Imprimiendo reultados
+                    print(f"Cantidad a comprar {cantidad}")
+                    # print(f"Articulos registrados {carrito}")
+            else:
+                print("El producto indicado no esta en el sistema")
+                #  ---------------------------------------------
+            continuar = input("Desea Continuar Agregando Articulos S/N : ")
+            if continuar.upper() == "N":
+                teclado = input("Enter para continuar")
+                system("cls")
+                break
+    elif condition == 2:
+        if len(carrito) == 0:
+            print(f"El Carrito de Compra esta vacio {len(carrito)}, debe comprar elementos en la tienda")
+            teclado = input("Enter para continuar")
+            system("cls")
+        else:
+            fImprimirFactura(carrito, productos) 
+            teclado = input("Enter para continuar")
+            system("cls")   
+    else:
+        print("Opcion de Menu Incorrecta")
+        teclado = input("Enter para volver al menu principal") 
