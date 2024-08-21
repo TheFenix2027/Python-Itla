@@ -115,3 +115,52 @@ def fImprimirFactura(pcarrito, pprodocutos):
         print((f"Impuestos     : RD$%.2f" % vImpuestos).rjust(anchoTotal))
         print((f"Total a Pagar : RD$%.2f" % vTotal).rjust(anchoTotal))
     print("-" * anchoTotal)
+
+# Creando Menu
+while True:
+    # system("cls")
+    print("Punto de Venta DJ")
+    fImprimirLists(productos)  
+    print("0- Para Salir | 1- Buscar Productos | 2- Imprimir Factura")
+    condition = int(input("Ingresar la Opcion a Trabajar: "))  
+    if condition == 0:   
+        print("Gracias por Su Compra!!!") 
+        break
+    elif condition == 1:
+        while True:
+            id = int(input("Ingresar el ID del Producto a Comprar: "))  
+            # Buscar Productos
+            vresultado = fBuscarLists(productos, id)
+            if vresultado == True:      
+                    cantidad = -1
+                    while cantidad < 0:
+                        cantidad = int(input("Ingresar la cantidad que desea del producto elegido (debe ser mayor que 1): "))    
+                        if cantidad > 0:
+                            if id in carrito:
+                                print(f"Articulo ya se encuentra en el carrito, se sumara la cantidad indicada")
+                                carrito[id] = carrito[id] + cantidad
+                            else:
+                                carrito[id] = cantidad  
+                    # Imprimiendo reultados
+                    print(f"Cantidad a comprar {cantidad}")
+                    # print(f"Articulos registrados {carrito}")
+            else:
+                print("El producto indicado no esta en el sistema")
+                #  ---------------------------------------------
+            continuar = input("Desea Continuar Agregando Articulos S/N : ")
+            if continuar.upper() == "N":
+                teclado = input("Enter para continuar")
+                system("cls")
+                break
+    elif condition == 2:
+        if len(carrito) == 0:
+            print(f"El Carrito de Compra esta vacio {len(carrito)}, debe comprar elementos en la tienda")
+            teclado = input("Enter para continuar")
+            system("cls")
+        else:
+            fImprimirFactura(carrito, productos) 
+            teclado = input("Enter para continuar")
+            system("cls")   
+    else:
+        print("Opcion de Menu Incorrecta")
+        teclado = input("Enter para volver al menu principal") 
