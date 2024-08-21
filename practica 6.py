@@ -71,3 +71,47 @@ def fBuscarLists(pprodocutos, id):
             resultado = True
     print("----------------------------------")  
     return(resultado)   
+
+def fImprimirFactura(pcarrito, pprodocutos):
+    vsubTotal = 0
+    vImpuestos = 0
+    vTotal = 0
+    vItebis = .18
+    
+    # Trabajando con el ancho de las columnas
+    anchoId = 5
+    anchoProducto = 15
+    anchoPrecioUnidad = 15
+    anchoCantidad = 10
+    anchoPrecioTotal = 15
+    anchoTotal = anchoId + anchoProducto + anchoPrecioUnidad + anchoCantidad + anchoPrecioTotal
+    #
+    
+    print("Productos Facturados en la Tienda")
+    print("-" * anchoTotal)
+    print(
+        "ID".ljust(anchoId) +
+        "Producto".ljust(anchoProducto) +
+        "Precio Unidad".ljust(anchoPrecioUnidad) +
+        "Cantidad".ljust(anchoCantidad) +
+        "Precio Total".ljust(anchoPrecioTotal)
+)
+
+    # Línea separadora
+    print("-" * anchoTotal)
+
+    for x in pcarrito:
+        for y in pprodocutos:
+            if str(x) == y:
+                cantidadCompra = pcarrito[x]        
+                producto = pprodocutos[y]
+                print(str(x).ljust(anchoId) + str(producto['prod']).ljust(anchoProducto) + ("RD$" + str(producto['prec'])).ljust(anchoPrecioUnidad) + str(cantidadCompra).ljust(anchoCantidad) + ("RD$"+str(producto['prec'] * cantidadCompra)).ljust(anchoPrecioTotal))
+                vsubTotal = vsubTotal + producto['prec'] * cantidadCompra
+    
+    if vsubTotal > 0:
+        vImpuestos = vsubTotal * vItebis
+        vTotal = vsubTotal + vImpuestos
+        print((f"SubTotal      : RD$%.2f" % vsubTotal).rjust(anchoTotal))
+        print((f"Impuestos     : RD$%.2f" % vImpuestos).rjust(anchoTotal))
+        print((f"Total a Pagar : RD$%.2f" % vTotal).rjust(anchoTotal))
+    print("-" * anchoTotal)
