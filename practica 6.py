@@ -58,3 +58,16 @@ def fImprimirLists(pprodocutos):
         producto = pprodocutos[item] 
         print(f"ID: {item} - Producto: {producto['prod']} - Precio: RD${producto['prec']}")
     print("----------------------------------")
+
+def fBuscarLists(pprodocutos, id):
+    resultado = False
+    print("Productos Existentes en la Tienda")
+    print("----------------------------------")
+    for item in pprodocutos:    
+        if str(id) == item:
+            producto = pprodocutos[item] 
+            print(f"Producto con ID: {id} encontrado")    
+            print(f"Producto: {producto['prod']} - Precio: RD${producto['prec']}")   
+            resultado = True
+    print("----------------------------------")  
+    return(resultado)   
