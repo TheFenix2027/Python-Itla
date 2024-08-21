@@ -50,3 +50,11 @@ def imprimirfactura(carrito):
     print('ID'+' '*(tamid+2)+'Nombre'+' '*(tamnombre+1)+'Precio'+' '*(tamprecio))
     for item in carrito:
         print(str(item['id'])+' '*(tamid+4-len(str(item['id'])))+item['nombre']+' '*(tamnombre+7-len(item['nombre']))+str(item['precio']))
+
+def fImprimirLists(pprodocutos):
+    print("Productos Existentes en la Tienda")
+    print("----------------------------------")
+    for item in pprodocutos:
+        producto = pprodocutos[item] 
+        print(f"ID: {item} - Producto: {producto['prod']} - Precio: RD${producto['prec']}")
+    print("----------------------------------")
